@@ -4,6 +4,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import xyz.fanjie.mall.common.Const;
+import xyz.fanjie.mall.common.ResponseCode;
 import xyz.fanjie.mall.common.ServerResponse;
 import xyz.fanjie.mall.common.TokenCache;
 import xyz.fanjie.mall.dao.UserMapper;
@@ -203,5 +204,17 @@ public class UserServiceImpl implements IUserService {
         }
         user.setPassword(StringUtils.EMPTY);
         return ServerResponse.createBySuccess(user);
+    }
+
+    public ServerResponse checkAdminRole(Integer userId){
+        User user = userMapper.selectByPrimaryKey(userId);
+        if(user == null){
+            return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(),"用户未登录");
+        }
+        if(user.getRole()==Const.Role.ROLE_ADMIN){
+            return ServerResponse.createBySuccess();
+        }else{
+            return ServerResponse.createByError();
+        }
     }
 }
