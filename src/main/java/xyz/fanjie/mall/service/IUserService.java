@@ -1,5 +1,6 @@
 package xyz.fanjie.mall.service;
 
+import com.github.pagehelper.PageInfo;
 import xyz.fanjie.mall.common.ServerResponse;
 import xyz.fanjie.mall.pojo.User;
 
@@ -19,6 +20,8 @@ public interface IUserService {
     ServerResponse<String> forgetCheckAnswer(String username,String question,String answer);
 
     ServerResponse<String> forgetResetPassword(String username,String passwordNew,String forgetToken);
+
+    ServerResponse<PageInfo> getUserList(int pageNum, int pageSize);
 
     ServerResponse<String> resetPassword(String passwordOld ,String passwordNew,User user);
 

@@ -3,6 +3,8 @@ package xyz.fanjie.mall.dao;
 import org.apache.ibatis.annotations.Param;
 import xyz.fanjie.mall.pojo.User;
 
+import java.util.List;
+
 public interface UserMapper {
     int deleteByPrimaryKey(Integer id);
 
@@ -31,6 +33,8 @@ public interface UserMapper {
     int checkPassword(@Param("passwordOld") String passwordOld,@Param("userId") Integer userId);
 
     int checkEmailByUserId(@Param("email") String email, @Param("userId") Integer userId);
+
+    List<User> selectList(Integer role);
 
 
 }

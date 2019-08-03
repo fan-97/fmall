@@ -225,4 +225,12 @@
         and
         id != #{userId}
     </select>
+
+    <select id="selectList" resultMap="BaseResultMap" parameterType="int">
+        select
+        <include refid="Base_Column_List"/>
+        from
+        mmall_user
+        where role = #{role}
+    </select>
 </mapper>

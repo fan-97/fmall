@@ -107,6 +107,9 @@ public class ServerResponse<T> implements Serializable {
         return new ServerResponse<T>(ResponseCode.ERROR.getCode(), ResponseCode.ERROR.getDesc());
     }
 
+    public static <T> ServerResponse<T> createByError(T data) {
+        return new ServerResponse<T>(ResponseCode.ERROR.getCode(), data);
+    }
     /**
      * 自定义错误信息
      * @param errorMessage
@@ -127,4 +130,10 @@ public class ServerResponse<T> implements Serializable {
     public static <T> ServerResponse<T> createByErrorCodeMessage(int code,String errorMessage) {
         return new ServerResponse<T>(code, errorMessage);
     }
+//
+//    public static void main(String[] args) {
+//        ServerResponse<String> response = ServerResponse.createByErrorMessage("123123");
+//        System.out.println(response.getData());
+//        System.out.println(response.getMsg());
+//    }
 }

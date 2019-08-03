@@ -1,5 +1,8 @@
 package xyz.fanjie.mall.service.impl;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+import com.google.common.collect.Lists;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,6 +15,7 @@ import xyz.fanjie.mall.pojo.User;
 import xyz.fanjie.mall.service.IUserService;
 import xyz.fanjie.mall.util.MD5Util;
 
+import java.util.List;
 import java.util.UUID;
 
 @Service("iUserService")
@@ -216,5 +220,20 @@ public class UserServiceImpl implements IUserService {
         }else{
             return ServerResponse.createByError();
         }
+    }
+
+    public ServerResponse<PageInfo> getUserList(int pageNum,int pageSize){
+        PageHelper.startPage(pageNum,pageSize);
+        //查询集合
+        List<User> userList = userMapper.selectList(Const.Role.ROLE_CUSTOMER);
+        List<User> resultList = Lists.newArrayList();
+        //不对外显示密码
+        for(User user : userList){
+            user.setPassword("");
+            resultList.add(user);
+        }
+        PageInfo resultPage = new PageInfo(userList);
+        resultPage.setList(resultList);
+        return ServerResponse.createBySuccess(resultPage);
     }
 }
